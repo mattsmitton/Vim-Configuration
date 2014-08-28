@@ -9,5 +9,5 @@ git clone git://github.com/beeerd/Vim-Configuration.git .vim
 # Create a symlink in your homedir from .vimrc to the .vimrc inside this.vim
 ln -s .vim/.vimrc 
 
-# Update bundles
+# Update bundles (Add whatever pathogen-compatible packages you want to this script)
 ruby .vim/update_bundles.rb
