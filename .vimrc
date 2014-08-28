@@ -36,13 +36,13 @@ set showmatch
 set incsearch
 set hls
 set t_Co=256
-set background=light
+set background=dark
 color solarized
 nnoremap <CR> :nohlsearch<cr>
 set cursorline
 set cmdheight=1
 set number
-" set numberwidth=5
+set numberwidth=2
 command! W :w
 let mapleader=","
 imap <c-c> <esc>
@@ -52,6 +52,19 @@ let NERDTreeDirArrows=0
 let NERDTreeIgnore = ['\.DS_Store$']
 set nowrap
 
+" Cory's Status line
+" set laststatus=2
+" set statusline=
+" set statusline+=%-3.3n\ " buffer number
+" set statusline+=%f\ " filename
+" set statusline+=%h%m%r%w " status flags
+" set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type
+" set statusline+=%{fugitive#statusline()} " Fugitive status
+" set statusline+=%= " right align remainder
+" set statusline+=0x%-8B " character value
+" set statusline+=%-14(%l,%c%V%) " line, character
+" set statusline+=%<%P " file position
+"
  " jamessan's
 set statusline=   " clear the statusline for when vimrc is reloaded
 set statusline+=%-3.3n\                      " buffer number
@@ -67,4 +80,3 @@ set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
 " Fuzzy Finder
 nnoremap <Leader>t :FufFile **/<cr>
-
