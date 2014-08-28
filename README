@@ -4,8 +4,10 @@ Recommended installation
 cd ~
 
 # Copy this down
-git clone git://github.com/counterbeing/Vim-Configuration.git .vim
+git clone git://github.com/beeerd/Vim-Configuration.git .vim
 
 # Create a symlink in your homedir from .vimrc to the .vimrc inside this.vim
 ln -s .vim/.vimrc 
 
+# Update bundles
+ruby .vim/update_bundles.rb
