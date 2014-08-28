@@ -1,4 +1,4 @@
-Recommended installation
+Recommended Installation
 ------------------------
 
 *  Move to your homedir
