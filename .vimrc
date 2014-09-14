@@ -11,7 +11,6 @@ if has("mouse")
   set mouse=a
 endif
 
-
 set wildignore=vendor/rails/**
 set history=1000
 set wildmenu
@@ -24,14 +23,17 @@ set backspace=indent,eol,start
 set ruler
 set showcmd
 map Q gq
-filetype plugin indent on
-autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=ruby | endif
+set smartindent
 set autoindent
+filetype plugin on 
+filetype indent on 
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
 set laststatus=2
+autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 set showmatch
 set incsearch
 set hls
@@ -42,7 +44,6 @@ nnoremap <CR> :nohlsearch<cr>
 set cursorline
 set cmdheight=1
 set number
-set numberwidth=2
 command! W :w
 let mapleader=","
 imap <c-c> <esc>
@@ -50,22 +51,10 @@ imap <S-CR> <CR><CR>end<Esc>-cc
 map <leader>n :NERDTreeToggle <Return>
 let NERDTreeDirArrows=0
 let NERDTreeIgnore = ['\.DS_Store$']
+let g:indentLine_char = '︙'
 set nowrap
 
-" Cory's Status line
-" set laststatus=2
-" set statusline=
-" set statusline+=%-3.3n\ " buffer number
-" set statusline+=%f\ " filename
-" set statusline+=%h%m%r%w " status flags
-" set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type
-" set statusline+=%{fugitive#statusline()} " Fugitive status
-" set statusline+=%= " right align remainder
-" set statusline+=0x%-8B " character value
-" set statusline+=%-14(%l,%c%V%) " line, character
-" set statusline+=%<%P " file position
-"
- " jamessan's
+" jamessan's status line
 set statusline=   " clear the statusline for when vimrc is reloaded
 set statusline+=%-3.3n\                      " buffer number
 set statusline+=%f\                          " file name

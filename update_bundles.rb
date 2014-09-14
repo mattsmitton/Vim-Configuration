@@ -5,24 +5,25 @@ require 'open-uri'
 
 
 git_bundles = [ 
-  "git://github.com/godlygeek/tabular.git",
-  "git://github.com/pangloss/vim-javascript.git",
-  "https://github.com/elzr/vim-json",
-  "https://github.com/kchmck/vim-coffee-script.git",
-  "git://github.com/tpope/vim-surround.git",
-  "git://github.com/scrooloose/nerdtree.git",
-  "git://github.com/tpope/vim-markdown.git",
-  "git://github.com/tpope/vim-rails.git",
-  "https://github.com/tomtom/tcomment_vim",
-  "git://github.com/vim-ruby/vim-ruby.git",
-  "git://github.com/altercation/vim-colors-solarized.git",
-  "https://github.com/taylor/vim-zoomwin",
-  "https://github.com/scrooloose/syntastic.git",
-  "https://github.com/vim-scripts/FuzzyFinder",
-  "https://github.com/avakhov/vim-yaml.git",
-  "https://github.com/vim-scripts/L9",
-  "https://github.com/mileszs/ack.vim.git",
-  "https://github.com/dougireton/vim-chef"
+  "git://github.com/altercation/vim-colors-solarized.git", # the best color scheme ever.
+  "https://github.com/dougireton/vim-chef",                 # chef linting
+  "https://github.com/kchmck/vim-coffee-script.git",       # coffee-script highlighting
+  "git://github.com/pangloss/vim-javascript.git",          # javascript highlighting
+  "https://github.com/elzr/vim-json",                      # json highlighting
+  "git://github.com/tpope/vim-markdown.git",               # markdown highlighting
+  "git://github.com/vim-ruby/vim-ruby.git",                # ruby highlighting
+  "git://github.com/tpope/vim-rails.git",                  # rails highlighting
+  "https://github.com/avakhov/vim-yaml.git",               # yaml highlighting
+  "git://github.com/godlygeek/tabular.git",                # quick regex based formatting (v-mode highlight, ':Tab /<pattern>')
+  "git://github.com/tpope/vim-surround.git",               # quick shortcuts for delimiters
+  "git://github.com/scrooloose/nerdtree.git",              # file tree navigator (,n)
+  "https://github.com/tomtom/tcomment_vim",                # add shortcut for commenting ('g-c-c')
+  "https://github.com/taylor/vim-zoomwin",                 # zoom in on a split pane (ctrl+w-o)
+  "https://github.com/scrooloose/syntastic.git",           # linter
+  "https://github.com/vim-scripts/FuzzyFinder",            # file search by file/pathname (,t)
+  "https://github.com/vim-scripts/L9",                     # fuzzy-finder dep
+  "https://github.com/mileszs/ack.vim.git",                # Ack-find from within vim (:Ack <pattern>)
+  "https://github.com/Yggdroot/indentLine",                # Sublime-like vertical guide lines
 ]
 
 bundles_dir = File.join(File.dirname(__FILE__), "bundle")
