@@ -38,6 +38,8 @@ set showmatch
 set incsearch
 set hls
 set t_Co=256
+" make error text more obvious in solarized (black on red)
+autocmd ColorScheme * highlight Error ctermbg=red ctermfg=256
 set background=dark
 color solarized
 nnoremap <CR> :nohlsearch<cr>
@@ -51,8 +53,11 @@ imap <S-CR> <CR><CR>end<Esc>-cc
 map <leader>n :NERDTreeToggle <Return>
 let NERDTreeDirArrows=0
 let NERDTreeIgnore = ['\.DS_Store$']
-let g:indentLine_char = '︙'
+" prevent conflict in vim-json and indentLine
+let g:indentLine_noConcealCursor=""
 set nowrap
+" pretty blue braces
+hi link jsonBraces Function
 
 " jamessan's status line
 set statusline=                                                   " clear the statusline for when vimrc is reloaded
