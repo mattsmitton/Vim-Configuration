@@ -84,6 +84,7 @@ function PasteToggle()
   if g:pasteMode 
     IndentLinesEnable
     set nopaste
+    set nowrap
     set number
     if has("mouse")
       set mouse=a
@@ -95,6 +96,7 @@ function PasteToggle()
     IndentLinesDisable
     set mouse=""
     set paste
+    set wrap
     set nonumber
     setlocal conceallevel=0
     let g:pasteMode = 1
