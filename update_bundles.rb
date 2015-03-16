@@ -6,7 +6,7 @@ require 'open-uri'
 
 git_bundles = [ 
   "git://github.com/altercation/vim-colors-solarized.git", # the best color scheme ever.
-  "https://github.com/dougireton/vim-chef",                 # chef linting
+  "https://github.com/dougireton/vim-chef",                # chef linting
   "https://github.com/kchmck/vim-coffee-script.git",       # coffee-script highlighting
   "git://github.com/pangloss/vim-javascript.git",          # javascript highlighting
   "https://github.com/elzr/vim-json",                      # json highlighting
@@ -20,10 +20,10 @@ git_bundles = [
   "https://github.com/tomtom/tcomment_vim",                # add shortcut for commenting ('g-c-c')
   "https://github.com/taylor/vim-zoomwin",                 # zoom in on a split pane (ctrl+w-o)
   "https://github.com/scrooloose/syntastic.git",           # linter
-  "https://github.com/vim-scripts/FuzzyFinder",            # file search by file/pathname (,t)
-  "https://github.com/vim-scripts/L9",                     # fuzzy-finder dep
   "https://github.com/mileszs/ack.vim.git",                # Ack-find from within vim (:Ack <pattern>)
   "https://github.com/Yggdroot/indentLine",                # Sublime-like vertical guide lines
+  "https://github.com/thoughtbot/pick.vim",                # Fuzzy-finder, requires `brew tap thoughtbot/formulae ; brew install pick`
+  "https://github.com/sjl/gundo.vim.git"                   # Mega Undo: graphical tree-based undo menu
 ]
 
 bundles_dir = File.join(File.dirname(__FILE__), "bundle")
