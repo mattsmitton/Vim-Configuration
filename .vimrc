@@ -75,6 +75,9 @@ set statusline+=%-14.(%l,%c%V%)\ %<%P                             " offset
 " Fuzzy Finder
 nnoremap <Leader>t :FufFile **/<cr>
 
+" Merge Lines
+map <leader>m Jxi\n<ESC>
+
 " Paste Mode
 " The following sets a variable to keep track of paste mode, and turns
 " both paste mode and insert lines on and off for copying and pasting 
