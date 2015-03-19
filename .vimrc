@@ -8,7 +8,45 @@
 "
 " This .vimrc file uses folding to manage the display of its contents.
 " Use the 'zR' command to open all of the sections if you're lost...
-"----------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
+" Vundle                                                                   {{{
+" ----------------------------------------------------------------------------
+" This is where you put all your github-sourced vim plugins
+" Run ':PluginInstall' to install them!
+set nocompatible              " required, use modern vim features
+filetype off                  " required, for the Vundle setup part. Re-enabled later.
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'         " Required for this to work
+Plugin 'dougireton/vim-chef'       " chef linting
+Plugin 'beeerd/vim-chef-goto'      " chef go-to-file support
+Plugin 'kchmck/vim-coffee-script'  " coffee-script highlighting
+Plugin 'pangloss/vim-javascript'   " javascript highlighting
+Plugin 'elzr/vim-json'             " json highlighting
+Plugin 'tpope/vim-markdown'        " markdown highlighting
+Plugin 'vim-ruby/vim-ruby'         " ruby highlighting
+Plugin 'tpope/vim-rails'           " rails highlighting
+Plugin 'avakhov/vim-yaml'          " yaml highlighting
+Plugin 'godlygeek/tabular'         " quick regex based formatting (v-mode highlight ':Tab /<pattern>')
+Plugin 'tpope/vim-surround'        " quick shortcuts for delimiters
+Plugin 'scrooloose/nerdtree'       " file tree navigator (n)
+Plugin 'tomtom/tcomment_vim'       " add shortcut for commenting ('g-c-c')
+Plugin 'taylor/vim-zoomwin'        " zoom in on a split pane (ctrl+w-o)
+Plugin 'scrooloose/syntastic'      " linter
+Plugin 'mileszs/ack.vim'           " Ack-find from within vim (:Ack <pattern>)
+Plugin 'Yggdroot/indentLine'       " Sublime-like vertical guide lines
+Plugin 'thoughtbot/pick.vim'       " Fuzzy-finder requires `brew tap thoughtbot/formulae ; brew install pick`
+Plugin 'sjl/gundo.vim'             " Mega Undo: graphical tree-based undo menu
+Plugin 'bling/vim-airline'         " Fancy status line
+Plugin 'tpope/vim-fugitive'        " Git integration
+Plugin 'chriskempson/base16-vim'   " Lots of color schemes
+
+call vundle#end()            " required
+
+" }}}-------------------------------------------------------------------------
 " Base                                                                     {{{
 " ----------------------------------------------------------------------------
 
@@ -16,7 +54,6 @@
 call pathogen#infect()
 call pathogen#helptags()
 
-set nocompatible  " enable modern Vim features
 set hidden        " hide buffers so we don't have to write them when working on another file
 set lazyredraw    " redraw only when we need to.
 set history=1000  " remember past 1000 commands
@@ -66,8 +103,10 @@ map <leader>n :NERDTreeToggle <Return>
 let NERDTreeDirArrows=0
 let NERDTreeIgnore = ['\.DS_Store$']
 
-nnoremap <Leader>t :call PickFile()<CR>| " Pick binding (an awesome fuzzy finder plugin)
-nnoremap <leader>u :GundoToggle<CR>|     " Gundo binding (ultra-undo plugin)
+nnoremap <leader>t :call PickFile()<CR>|   " Pick binding (an awesome fuzzy finder plugin)
+nnoremap <leader>u :GundoToggle<CR>|       " Gundo binding (ultra-undo plugin)
+nnoremap <leader>f :ChefFindAny<CR>|       " Open chef resource that cursor is on
+nnoremap <leader>g :ChefFindAnyVsplit<CR>| " Same, but in vertical split pane
 
 " }}}-------------------------------------------------------------------------
 " Key Bindings                                                             {{{

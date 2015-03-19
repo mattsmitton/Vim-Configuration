@@ -17,6 +17,11 @@ Recommended Installation
 
   `ln -s .vim/.vimrc`
 
-* Update bundles (Add whatever pathogen-compatible packages you want to this script)
+* Setup and run Vundle
 
-  `ruby .vim/update_bundles.rb`
+  ```
+  cd .vim
+  mkdir bundle
+  git clone https://github.com/gmarik/Vundle.vim.git bundle/Vundle.vim
+  vim +PluginInstall +qall
+  ```
