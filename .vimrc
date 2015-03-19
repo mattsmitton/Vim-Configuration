@@ -1,18 +1,20 @@
 "----------------------------------------------------------------------------
-"              __
-"      __  __ /\_\    ___ ___   _ __   ___
-"     /\ \/\ \\/\ \ /' __` __`\/\`'__\/'___\
-"    __\ \ \_/ |\ \ \/\ \/\ \/\ \ \ \//\ \__/
-"   /\_\\ \___/  \ \_\ \_\ \_\ \_\ \_\\ \____\
-"   \/_/ \/__/    \/_/\/_/\/_/\/_/\/_/ \/____/
+"                          __
+"                  __  __ /\_\    ___ ___   _ __   ___
+"                 /\ \/\ \\/\ \ /' __` __`\/\`'__\/'___\
+"                __\ \ \_/ |\ \ \/\ \/\ \/\ \ \ \//\ \__/
+"               /\_\\ \___/  \ \_\ \_\ \_\ \_\ \_\\ \____\
+"               \/_/ \/__/    \/_/\/_/\/_/\/_/\/_/ \/____/
 "
 " This .vimrc file uses folding to manage the display of its contents.
 " Use the 'zR' command to open all of the sections if you're lost...
 " ----------------------------------------------------------------------------
-" Vundle                                                                   {{{
+" Plugins                                                                  {{{
 " ----------------------------------------------------------------------------
 " This is where you put all your github-sourced vim plugins
-" Run ':PluginInstall' to install them!
+" Run ':PluginInstall' to install them
+" Run ':PluginClean' to remove unused plugins
+
 set nocompatible              " required, use modern vim features
 filetype off                  " required, for the Vundle setup part. Re-enabled later.
 
@@ -20,39 +22,43 @@ filetype off                  " required, for the Vundle setup part. Re-enabled 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'         " Required for this to work
-Plugin 'dougireton/vim-chef'       " chef linting
-Plugin 'beeerd/vim-chef-goto'      " chef go-to-file support
-Plugin 'kchmck/vim-coffee-script'  " coffee-script highlighting
-Plugin 'pangloss/vim-javascript'   " javascript highlighting
-Plugin 'elzr/vim-json'             " json highlighting
-Plugin 'tpope/vim-markdown'        " markdown highlighting
-Plugin 'vim-ruby/vim-ruby'         " ruby highlighting
-Plugin 'tpope/vim-rails'           " rails highlighting
-Plugin 'avakhov/vim-yaml'          " yaml highlighting
-Plugin 'godlygeek/tabular'         " quick regex based formatting (v-mode highlight ':Tab /<pattern>')
-Plugin 'tpope/vim-surround'        " quick shortcuts for delimiters
-Plugin 'scrooloose/nerdtree'       " file tree navigator (n)
-Plugin 'tomtom/tcomment_vim'       " add shortcut for commenting ('g-c-c')
-Plugin 'taylor/vim-zoomwin'        " zoom in on a split pane (ctrl+w-o)
-Plugin 'scrooloose/syntastic'      " linter
-Plugin 'mileszs/ack.vim'           " Ack-find from within vim (:Ack <pattern>)
-Plugin 'Yggdroot/indentLine'       " Sublime-like vertical guide lines
-Plugin 'thoughtbot/pick.vim'       " Fuzzy-finder requires `brew tap thoughtbot/formulae ; brew install pick`
-Plugin 'sjl/gundo.vim'             " Mega Undo: graphical tree-based undo menu
-Plugin 'bling/vim-airline'         " Fancy status line
-Plugin 'tpope/vim-fugitive'        " Git integration
-Plugin 'chriskempson/base16-vim'   " Lots of color schemes
+Plugin 'gmarik/Vundle.vim'            " Required for this to work
+Plugin 'dougireton/vim-chef'          " chef linting
+Plugin 'beeerd/vim-chef-goto'         " chef go-to-file support
+Plugin 'MarcWeber/vim-addon-mw-utils' " Dependency for beeerd/vim-chef-snippets
+Plugin 'tomtom/tlib_vim'              " Dependency for beeerd/vim-chef-snippets
+Plugin 'garbas/vim-snipmate'          " Dependency for beeerd/vim-chef-snippets
+Plugin 'beeerd/vim-chef-snippets'     " Handy chef snippets and highlighting
+Plugin 'kchmck/vim-coffee-script'     " coffee-script highlighting
+Plugin 'pangloss/vim-javascript'      " javascript highlighting
+Plugin 'elzr/vim-json'                " json highlighting
+Plugin 'tpope/vim-markdown'           " markdown highlighting
+Plugin 'vim-ruby/vim-ruby'            " ruby highlighting
+Plugin 'tpope/vim-rails'              " rails highlighting
+Plugin 'avakhov/vim-yaml'             " yaml highlighting
+Plugin 'godlygeek/tabular'            " quick regex based formatting (v-mode highlight ':Tab /<pattern>')
+Plugin 'tpope/vim-surround'           " quick shortcuts for delimiters
+Plugin 'scrooloose/nerdtree'          " file tree navigator (n)
+Plugin 'tomtom/tcomment_vim'          " add shortcut for commenting ('g-c-c')
+Plugin 'taylor/vim-zoomwin'           " zoom in on a split pane (ctrl+w-o)
+Plugin 'scrooloose/syntastic'         " linter
+Plugin 'mileszs/ack.vim'              " Ack-find from within vim (:Ack <pattern>)
+Plugin 'Yggdroot/indentLine'          " Sublime-like vertical guide lines
+Plugin 'thoughtbot/pick.vim'          " Fuzzy-finder requires `brew tap thoughtbot/formulae ; brew install pick`
+Plugin 'sjl/gundo.vim'                " Mega Undo: graphical tree-based undo menu
+Plugin 'bling/vim-airline'            " Fancy status line
+Plugin 'tpope/vim-fugitive'           " Git integration
+Plugin 'chriskempson/base16-vim'      " Lots of color schemes
 
 call vundle#end()            " required
-
-" }}}-------------------------------------------------------------------------
-" Base                                                                     {{{
-" ----------------------------------------------------------------------------
 
 " Set up Pathogen Bundle Mangement
 call pathogen#infect()
 call pathogen#helptags()
+
+" }}}-------------------------------------------------------------------------
+" General/Misc                                                             {{{
+" ----------------------------------------------------------------------------
 
 set hidden        " hide buffers so we don't have to write them when working on another file
 set lazyredraw    " redraw only when we need to.
@@ -113,12 +119,13 @@ nnoremap <leader>g :ChefFindAnyVsplit<CR>| " Same, but in vertical split pane
 " ----------------------------------------------------------------------------
 
 " Note: pipe characters at the end of these commands are to allow
-" inline comments. Gross hack job. But look how pretty!
+" inline comments. Gross hack job...But look how pretty!
 
-map Q gq|                        " shortcut to rewrap selected text
-command! W :w                    " For fat fingers: make :W == :w
+command! W :w                    " For fat fingers
+command! Q :q
 imap <c-c> <esc>|                " Map Ctrl-c to <Esc> to ease finger gymnastics
 imap <S-CR> <CR><CR>end<Esc>-cc| " Shift-Enger to insert 'end' from insert mode, broken?
+map Q gq|                        " shortcut to rewrap selected text
 map <leader>m Jxi\n<ESC>|        " Merge Lines, replacing newlines with \n char
 nnoremap gV `[v`]|               " Highlight last inserted text
 
@@ -144,12 +151,20 @@ set shiftwidth=2   " Number of space chars used for indentation
 set softtabstop=2  " Treat our hard tabs like soft tabs (backspace deletes 2 spaces)
 set expandtab      " When inserting <Tab> char, write as spaces instead.
 set autoindent     " copies indentation level from the previous line, shouldn't interfere with filetype indent.
-filetype plugin on " determine various behaviour by file extension
-filetype indent on " indent based on file-type
 
-" Filetype-specific settings
+" }}}-------------------------------------------------------------------------
+" Filetype Handling                                                        {{{
+" ----------------------------------------------------------------------------
+
+filetype plugin indent on " enable modified behaviour by file extension
+
+" Whitespace
 autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
+
+" Workaround for crappy filetype detection in vim-chef plugin
+" Replace with your cookbook path
+autocmd BufRead,BufNewFile ~/git/cpconfig/cookbooks/* set filetype=ruby.chef
 
 " }}}-------------------------------------------------------------------------
 " Color                                                                    {{{
