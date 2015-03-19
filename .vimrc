@@ -1,4 +1,14 @@
-" ----------------------------------------------------------------------------
+"----------------------------------------------------------------------------
+"              __
+"      __  __ /\_\    ___ ___   _ __   ___
+"     /\ \/\ \\/\ \ /' __` __`\/\`'__\/'___\
+"    __\ \ \_/ |\ \ \/\ \/\ \/\ \ \ \//\ \__/
+"   /\_\\ \___/  \ \_\ \_\ \_\ \_\ \_\\ \____\
+"   \/_/ \/__/    \/_/\/_/\/_/\/_/\/_/ \/____/
+"
+" This .vimrc file uses folding to manage the display of its contents.
+" Use the 'zR' command to open all of the sections if you're lost...
+"----------------------------------------------------------------------------
 " Base                                                                     {{{
 " ----------------------------------------------------------------------------
 
@@ -10,6 +20,7 @@ set nocompatible  " enable modern Vim features
 set hidden        " hide buffers so we don't have to write them when working on another file
 set lazyredraw    " redraw only when we need to.
 set history=1000  " remember past 1000 commands
+set ttyfast       " Indicates a fast terminal connection
 let mapleader="," " for various shortcuts later
 
 " }}}-------------------------------------------------------------------------
@@ -31,6 +42,8 @@ set noshowmode                    " don't show mode in last row, it's in airline
 set laststatus=2                  " Always display the status line
 let g:airline_powerline_fonts = 1 " Enable special powerline font (requires install)
 let g:airline_theme='base16'      " Airline theme
+let g:airline_left_sep=''         " Controls airline separator characters
+let g:airline_right_sep=''        " these can get a little goofy depending on font
 
 " }}}-------------------------------------------------------------------------
 " Input and Navigation                                                     {{{
@@ -111,19 +124,22 @@ endif
 
 " Base16 plugin options
 let base16colorspace=256    " Enable 256 color mode
-colorscheme base16-tomorrow " set color scheme
+colorscheme base16-eighties " set color scheme
 set background=dark         " Use dark instead of light
+
+" Custom modifications
+highlight LineNr ctermfg=blue " blue line numbers
+hi link jsonBraces Function|  " pretty blue braces instead of red
 
 " }}}-------------------------------------------------------------------------
 " Appearance                                                               {{{
 " ----------------------------------------------------------------------------
 
-let g:indentLine_noConcealCursor="" " prevent conflict in vim-json and indentLine
-hi link jsonBraces Function| " pretty blue braces instead of red
-set synmaxcol=220 " Prevent performance issues on long lines
-set nowrap        " Don't wrap lines by default
-set cursorline  " highlight cursor location
-set number      " show line numbers
+let g:indentLine_noConcealCursor=""  "  prevent conflict in vim-json and indentLine
+set synmaxcol=500                    "  Prevent performance issues on long lines
+set nowrap                           "  Don't wrap lines by default
+set cursorline                       "  highlight cursor location
+set number                           "  show line numbers
 
 " }}}-------------------------------------------------------------------------
 " Custom Functions                                                         {{{
