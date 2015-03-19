@@ -229,8 +229,8 @@ endfunction
 map <leader>p :call PasteToggle()<cr>
 
 
-" Automatically create backup/cache dirs for vim
-" in ~/.vim-tmp/
+" Automatically create backup/tmp dirs for vim
+" in ~/.vim
 " Filenames are full paths with % separators
 function! InitBackupDir()
   if has('win32') || has('win32unix') "windows/cygwin
@@ -238,7 +238,7 @@ function! InitBackupDir()
   else
     let l:separator = '.'
   endif
-  let l:parent = $HOME . '/' . l:separator . 'vim-tmp/'
+  let l:parent = $HOME . '/' . l:separator . 'vim/'
   let l:backup = l:parent . 'backup/'
   let l:tmp = l:parent . 'tmp/'
   if exists('*mkdir')
