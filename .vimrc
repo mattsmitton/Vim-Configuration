@@ -135,8 +135,8 @@ nmap <leader>j <Esc>:%!python -m json.tool<CR><ESC>gg=G<Esc>:noh<CR>
 nmap <leader>a <Esc>:%s/\[\:\(\w\+\)\]/\[\'\1\'\]/g<CR>
 " Left align two columns in an indented block, useful for chef
 vmap <leader>l :Tab / \+\w\+ /l0l0l0<CR>
-" Automatically backup changes when exiting INSERT mode
-"inoremap <Esc> <Esc>:w! ~/.vim/backup/last<CR>
+" Automatically backup knife changes when exiting INSERT mode
+autocmd BufNewFile,BufRead */knife-edit* inoremap <Esc> <Esc>:w! ~/.vim/backup/knife-last<CR>
 " Copy selected text to clipboard
 vmap <C-x> :!pbcopy<CR>
 vmap <C-c> :w !pbcopy<CR><CR>
