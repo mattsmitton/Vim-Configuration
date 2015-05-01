@@ -131,6 +131,15 @@ nnoremap gV `[v`]|               " Highlight last inserted text
 
 " Shortcut to pretty-format ugly blocks of json
 nmap <leader>j <Esc>:%!python -m json.tool<CR><ESC>gg=G<Esc>:noh<CR>
+" To switch symbol chef attribs to strings
+nmap <leader>a <Esc>:%s/\[\:\(\w\+\)\]/\[\'\1\'\]/g<CR>
+" Left align two columns in an indented block, useful for chef
+vmap <leader>l :Tab / \+\w\+ /l0l0l0<CR>
+" Automatically backup changes when exiting INSERT mode
+"inoremap <Esc> <Esc>:w! ~/.vim/backup/last<CR>
+" Copy selected text to clipboard
+vmap <C-x> :!pbcopy<CR>
+vmap <C-c> :w !pbcopy<CR><CR>
 
 " }}}-------------------------------------------------------------------------
 " Folding                                                                  {{{
@@ -182,8 +191,9 @@ colorscheme base16-eighties " set color scheme
 set background=dark         " Use dark instead of light
 
 " Custom modifications
-highlight LineNr ctermfg=blue " blue line numbers
-hi link jsonBraces Function|  " pretty blue braces instead of red
+hi LineNr ctermfg=blue         " blue line numbers
+hi CursorLineNr ctermfg=yellow " Cursor line number is yellow
+hi link jsonBraces Function|   " pretty blue braces instead of red
 
 " }}}-------------------------------------------------------------------------
 " Appearance                                                               {{{
@@ -198,6 +208,13 @@ set number                           "  show line numbers
 " }}}-------------------------------------------------------------------------
 " Custom Functions                                                         {{{
 " ----------------------------------------------------------------------------
+" AutoSave!
+" Automatically save the buffer to .vim/backup/last
+" upon hitting <Esc> while in INSERT mode
+function AutoSaveIt()
+  execute w! ~/.vim/backup/last
+  echom "Autosaved to ~/.vim/backup/last"
+endfunction
 
 " Paste Toggle
 " The following sets a variable to keep track of paste mode, and turns
