@@ -22,33 +22,34 @@ filetype off                  " required, for the Vundle setup part. Re-enabled 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'            " Required for this to work
-Plugin 'dougireton/vim-chef'          " chef linting
-Plugin 'beeerd/vim-chef-goto'         " chef go-to-file support
-Plugin 'MarcWeber/vim-addon-mw-utils' " Dependency for beeerd/vim-chef-snippets
-Plugin 'tomtom/tlib_vim'              " Dependency for beeerd/vim-chef-snippets
-Plugin 'garbas/vim-snipmate'          " Dependency for beeerd/vim-chef-snippets
-Plugin 'beeerd/vim-chef-snippets'     " Handy chef snippets and highlighting
-Plugin 'kchmck/vim-coffee-script'     " coffee-script highlighting
-Plugin 'pangloss/vim-javascript'      " javascript highlighting
-Plugin 'elzr/vim-json'                " json highlighting
-Plugin 'tpope/vim-markdown'           " markdown highlighting
-Plugin 'vim-ruby/vim-ruby'            " ruby highlighting
-Plugin 'tpope/vim-rails'              " rails highlighting
-Plugin 'avakhov/vim-yaml'             " yaml highlighting
-Plugin 'godlygeek/tabular'            " quick regex based formatting (v-mode highlight ':Tab /<pattern>')
-Plugin 'tpope/vim-surround'           " quick shortcuts for delimiters
-Plugin 'scrooloose/nerdtree'          " file tree navigator (n)
-Plugin 'tomtom/tcomment_vim'          " add shortcut for commenting ('g-c-c')
-Plugin 'taylor/vim-zoomwin'           " zoom in on a split pane (ctrl+w-o)
-Plugin 'scrooloose/syntastic'         " linter
-Plugin 'mileszs/ack.vim'              " Ack-find from within vim (:Ack <pattern>)
-Plugin 'Yggdroot/indentLine'          " Sublime-like vertical guide lines
-Plugin 'thoughtbot/pick.vim'          " Fuzzy-finder requires `brew tap thoughtbot/formulae ; brew install pick`
-Plugin 'sjl/gundo.vim'                " Mega Undo: graphical tree-based undo menu
-Plugin 'bling/vim-airline'            " Fancy status line
-Plugin 'tpope/vim-fugitive'           " Git integration
-Plugin 'chriskempson/base16-vim'      " Lots of color schemes
+Plugin 'gmarik/Vundle.vim'                      " Required for this to work
+Plugin 'dougireton/vim-chef'                    " chef linting
+Plugin 'beeerd/vim-chef-goto'                   " chef go-to-file support
+Plugin 'MarcWeber/vim-addon-mw-utils'           " Dependency for beeerd/vim-chef-snippets
+Plugin 'tomtom/tlib_vim'                        " Dependency for beeerd/vim-chef-snippets
+Plugin 'garbas/vim-snipmate'                    " Dependency for beeerd/vim-chef-snippets
+Plugin 'beeerd/vim-chef-snippets'               " Handy chef snippets and highlighting
+Plugin 'kchmck/vim-coffee-script'               " coffee-script highlighting
+Plugin 'pangloss/vim-javascript'                " javascript highlighting
+Plugin 'othree/javascript-libraries-syntax.vim' " javascript library syntax highlighting
+Plugin 'elzr/vim-json'                          " json highlighting
+Plugin 'tpope/vim-markdown'                     " markdown highlighting
+Plugin 'vim-ruby/vim-ruby'                      " ruby highlighting
+Plugin 'tpope/vim-rails'                        " rails highlighting
+Plugin 'avakhov/vim-yaml'                       " yaml highlighting
+Plugin 'godlygeek/tabular'                      " quick regex based formatting (v-mode highlight ':Tab /<pattern>')
+Plugin 'tpope/vim-surround'                     " quick shortcuts for delimiters
+Plugin 'scrooloose/nerdtree'                    " file tree navigator (n)
+Plugin 'tomtom/tcomment_vim'                    " add shortcut for commenting ('g-c-c')
+Plugin 'taylor/vim-zoomwin'                     " zoom in on a split pane (ctrl+w-o)
+Plugin 'scrooloose/syntastic'                   " linter
+Plugin 'mileszs/ack.vim'                        " Ack-find from within vim (:Ack <pattern>)
+Plugin 'Yggdroot/indentLine'                    " Sublime-like vertical guide lines
+Plugin 'thoughtbot/pick.vim'                    " Fuzzy-finder requires `brew tap thoughtbot/formulae ; brew install pick`
+Plugin 'sjl/gundo.vim'                          " Mega Undo: graphical tree-based undo menu
+Plugin 'bling/vim-airline'                      " Fancy status line
+Plugin 'tpope/vim-fugitive'                     " Git integration
+Plugin 'chriskempson/base16-vim'                " Lots of color schemes
 
 call vundle#end()            " required
 
@@ -113,6 +114,7 @@ nnoremap <leader>t :call PickFile()<CR>|   " Pick binding (an awesome fuzzy find
 nnoremap <leader>u :GundoToggle<CR>|       " Gundo binding (ultra-undo plugin)
 nnoremap <leader>f :ChefFindAny<CR>|       " Open chef resource that cursor is on
 nnoremap <leader>g :ChefFindAnyVsplit<CR>| " Same, but in vertical split pane
+nnoremap <leader>w ::%s/\s\+$//<CR>|       " Remove all trailing whitespace
 
 " }}}-------------------------------------------------------------------------
 " Key Bindings                                                             {{{
@@ -176,7 +178,7 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd BufRead,BufNewFile ~/git/cpconfig/cookbooks/* set filetype=ruby.chef
 
 " }}}-------------------------------------------------------------------------
-" Color                                                                    {{{
+" Color & Syntax                                                           {{{
 " ----------------------------------------------------------------------------
 
 syntax on                   " enable file syntax highlighting
@@ -194,6 +196,10 @@ set background=dark         " Use dark instead of light
 hi LineNr ctermfg=blue         " blue line numbers
 hi CursorLineNr ctermfg=yellow " Cursor line number is yellow
 hi link jsonBraces Function|   " pretty blue braces instead of red
+
+" Syntax modules
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_ruby_checkers       = ['rubocop', 'mri']
 
 " }}}-------------------------------------------------------------------------
 " Appearance                                                               {{{
