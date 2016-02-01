@@ -175,7 +175,7 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
 " Workaround for crappy filetype detection in vim-chef plugin
 " Replace with your cookbook path
-autocmd BufRead,BufNewFile ~/git/cpconfig/cookbooks/* set filetype=ruby.chef
+autocmd BufRead,BufNewFile ~/git/*/cookbooks/* set filetype=ruby.chef
 
 " }}}-------------------------------------------------------------------------
 " Color & Syntax                                                           {{{
