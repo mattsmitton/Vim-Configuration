@@ -2,3 +2,7 @@
 backup/*
 tmp
 .netrwhist
+.VimballRecord
+autoload/visincr.vim
+doc/
+plugin/

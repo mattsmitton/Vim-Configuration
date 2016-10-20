@@ -40,8 +40,8 @@ Plugin 'kchmck/vim-coffee-script'               " coffee-script highlighting
 Plugin 'mileszs/ack.vim'                        " Ack-find from within vim (:Ack <pattern>)
 Plugin 'othree/javascript-libraries-syntax.vim' " javascript library syntax highlighting
 Plugin 'pangloss/vim-javascript'                " javascript highlighting
+Plugin 'saltstack/salt-vim'                     " Saltstack file detection and highlighting
 Plugin 'scrooloose/nerdtree'                    " file tree navigator (n)
-Plugin 'scrooloose/syntastic'                   " linter
 Plugin 'sjl/gundo.vim'                          " Mega Undo: graphical tree-based undo menu
 Plugin 'taylor/vim-zoomwin'                     " zoom in on a split pane (ctrl+w-o)
 Plugin 'thoughtbot/pick.vim'                    " Fuzzy-finder requires `brew tap thoughtbot/formulae ; brew install pick`
@@ -52,6 +52,7 @@ Plugin 'tpope/vim-markdown'                     " markdown highlighting
 Plugin 'tpope/vim-rails'                        " rails highlighting
 Plugin 'tpope/vim-surround'                     " quick shortcuts for delimiters
 Plugin 'vim-ruby/vim-ruby'                      " ruby highlighting
+Plugin 'w0rp/ale'                               " Asynchronous linting
 
 call vundle#end()            " required
 
@@ -135,15 +136,22 @@ nnoremap gV `[v`]|               " Highlight last inserted text
 
 " Shortcut to pretty-format ugly blocks of json
 nmap <leader>j <Esc>:%!python -m json.tool<CR><ESC>gg=G<Esc>:noh<CR>
+
 " To switch symbol chef attribs to strings
 nmap <leader>a <Esc>:%s/\[\:\(\w\+\)\]/\[\'\1\'\]/g<CR>
+
 " Left align two columns in an indented block, useful for chef
 vmap <leader>l :Tab / \+\w\+ /l0l0l0<CR>
+
 " Automatically backup knife changes when exiting INSERT mode
 autocmd BufNewFile,BufRead */knife-edit* inoremap <Esc> <Esc>:w! ~/.vim/backup/knife-last<CR>
+
 " Copy selected text to clipboard
 vmap <C-x> :!pbcopy<CR>
 vmap <C-c> :w !pbcopy<CR><CR>
+
+" Call rubocop with autocorrect
+map <leader>R :call RunRubocop()<CR>
 
 " }}}-------------------------------------------------------------------------
 " Folding                                                                  {{{
@@ -174,7 +182,6 @@ filetype plugin indent on " enable modified behaviour by file extension
 " Whitespace
 autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
-autocmd FileType terraform setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
 " Workaround for crappy filetype detection in vim-chef plugin
 " Replace with your cookbook path
@@ -183,7 +190,6 @@ autocmd BufRead,BufNewFile ~/git/*/cookbooks/* set filetype=ruby.chef
 " }}}-------------------------------------------------------------------------
 " Color & Syntax                                                           {{{
 " ----------------------------------------------------------------------------
-
 syntax on                   " enable file syntax highlighting
 
 if &term == "screen"
@@ -199,10 +205,6 @@ set background=dark         " Use dark instead of light
 hi LineNr ctermfg=blue         " blue line numbers
 hi CursorLineNr ctermfg=yellow " Cursor line number is yellow
 hi link jsonBraces Function|   " pretty blue braces instead of red
-
-" Syntax modules
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_ruby_checkers       = ['rubocop', 'mri']
 
 " Zippier update interval (in ms)
 set updatetime=250
@@ -254,6 +256,7 @@ function PasteToggle()
     set nonumber
     setlocal conceallevel=0
     let g:pasteMode = 1
+    set expandtab
     echom "Paste mode ON!"
   endif
 endfunction
@@ -303,5 +306,11 @@ function! InitBackupDir()
   endif
 endfunction
 call InitBackupDir()
+
+function! RunRubocop()
+  let filePath = fnamemodify(expand("%"), ":~:.")
+  execute ':silent !NO_BUNDLE_EXEC=1 rubocop -f s -Ra ./' . filePath
+  redraw!
+endfunction
 " }}}
 " vim:foldmethod=marker:foldlevel=0
