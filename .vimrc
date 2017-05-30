@@ -30,6 +30,7 @@ Plugin 'beeerd/vim-chef-goto'                   " chef go-to-file support
 Plugin 'beeerd/vim-chef-snippets'               " Handy chef snippets and highlighting
 Plugin 'bling/vim-airline'                      " Fancy status line
 Plugin 'chriskempson/base16-vim'                " Lots of color schemes
+Plugin 'vim-airline/vim-airline-themes'         " Lots of additional color schemes.  Fixes a bug with base16-vim.
 Plugin 'dougireton/vim-chef'                    " chef linting
 Plugin 'elzr/vim-json'                          " json highlighting
 Plugin 'garbas/vim-snipmate'                    " Dependency for beeerd/vim-chef-snippets
