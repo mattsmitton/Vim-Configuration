@@ -29,19 +29,24 @@ Plugin 'avakhov/vim-yaml'                       " yaml highlighting
 Plugin 'beeerd/vim-chef-goto'                   " chef go-to-file support
 Plugin 'beeerd/vim-chef-snippets'               " Handy chef snippets and highlighting
 Plugin 'bling/vim-airline'                      " Fancy status line
+Plugin 'bracki/vim-prometheus'                  " Prometheus support
 Plugin 'chriskempson/base16-vim'                " Lots of color schemes
 Plugin 'dougireton/vim-chef'                    " chef linting
+Plugin 'ekalinin/Dockerfile.vim'                "
 Plugin 'elzr/vim-json'                          " json highlighting
+Plugin 'erikzaadi/vim-ansible-yaml'             " Ansible YAML support
 Plugin 'garbas/vim-snipmate'                    " Dependency for beeerd/vim-chef-snippets
 Plugin 'gmarik/Vundle.vim'                      " Required for this to work
 Plugin 'godlygeek/tabular'                      " quick regex based formatting (v-mode highlight ':Tab /<pattern>')
 Plugin 'hashivim/vim-terraform'                 " Terraform syntax highlighting and :Terraform cmd
 Plugin 'kchmck/vim-coffee-script'               " coffee-script highlighting
+Plugin 'lepture/vim-jinja'                      " Jinja support
 Plugin 'mileszs/ack.vim'                        " Ack-find from within vim (:Ack <pattern>)
 Plugin 'othree/javascript-libraries-syntax.vim' " javascript library syntax highlighting
 Plugin 'pangloss/vim-javascript'                " javascript highlighting
 Plugin 'saltstack/salt-vim'                     " Saltstack file detection and highlighting
 Plugin 'scrooloose/nerdtree'                    " file tree navigator (n)
+Plugin 'scrooloose/syntastic'                   " Syntax utilities
 Plugin 'sjl/gundo.vim'                          " Mega Undo: graphical tree-based undo menu
 Plugin 'taylor/vim-zoomwin'                     " zoom in on a split pane (ctrl+w-o)
 Plugin 'thoughtbot/pick.vim'                    " Fuzzy-finder requires `brew tap thoughtbot/formulae ; brew install pick`
