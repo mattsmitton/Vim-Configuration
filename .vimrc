@@ -188,6 +188,14 @@ filetype plugin indent on " enable modified behaviour by file extension
 autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
+" Suggested by jdossey for ansible-related work
+if has('autocmd')
+  au FileType cpp,c,java,sh,pl,php set cindent
+  au FileType python set cinwords=if,elif,else,for,while,try,except,finally,def,class ts=4 sts=4 sw=4 fdm=indent
+  au BufRead *.md set conceallevel=2 wrap linebreak nonumber colorcolumn=0
+  au BufRead *.terra set ft=tf
+endif
+  
 " Workaround for crappy filetype detection in vim-chef plugin
 " Replace with your cookbook path
 autocmd BufRead,BufNewFile ~/git/*/cookbooks/* set filetype=ruby.chef
