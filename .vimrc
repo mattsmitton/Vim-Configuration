@@ -19,8 +19,8 @@ set nocompatible              " required, use modern vim features
 filetype off                  " required, for the Vundle setup part. Re-enabled later.
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+set rtp+=$HOME/.vim/bundle/Vundle.vim/
+call vundle#begin('$HOME/.vim/bundle/')
 
 Plugin 'MarcWeber/vim-addon-mw-utils'           " Dependency for beeerd/vim-chef-snippets
 Plugin 'Yggdroot/indentLine'                    " Sublime-like vertical guide lines
@@ -30,9 +30,10 @@ Plugin 'beeerd/vim-chef-goto'                   " chef go-to-file support
 Plugin 'beeerd/vim-chef-snippets'               " Handy chef snippets and highlighting
 Plugin 'bling/vim-airline'                      " Fancy status line
 Plugin 'bracki/vim-prometheus'                  " Prometheus support
+Plugin 'vim-airline/vim-airline-themes'         " Add additional airline themes
 Plugin 'chriskempson/base16-vim'                " Lots of color schemes
 Plugin 'dougireton/vim-chef'                    " chef linting
-Plugin 'ekalinin/Dockerfile.vim'                "
+Plugin 'ekalinin/Dockerfile.vim'                " Dockerfile linting
 Plugin 'elzr/vim-json'                          " json highlighting
 Plugin 'erikzaadi/vim-ansible-yaml'             " Ansible YAML support
 Plugin 'garbas/vim-snipmate'                    " Dependency for beeerd/vim-chef-snippets
@@ -74,6 +75,12 @@ set lazyredraw    " redraw only when we need to.
 set history=1000  " remember past 1000 commands
 set ttyfast       " Indicates a fast terminal connection
 let mapleader="," " for various shortcuts later
+
+"Use a block cursor in normal/visual mode
+let &t_ti.="\e[1 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
 
 " }}}-------------------------------------------------------------------------
 " Command Line                                                            {{{
@@ -211,7 +218,6 @@ endif
 
 " Base16 plugin options
 let base16colorspace=256    " Enable 256 color mode
-colorscheme base16-eighties " set color scheme
 set background=dark         " Use dark instead of light
 
 " Custom modifications
