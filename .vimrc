@@ -217,8 +217,10 @@ if &term == "screen"
 endif
 
 " Base16 plugin options
-let base16colorspace=256    " Enable 256 color mode
-set background=dark         " Use dark instead of light
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
 " Custom modifications
 hi LineNr ctermfg=blue         " blue line numbers
