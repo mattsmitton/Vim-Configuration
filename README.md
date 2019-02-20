@@ -1,6 +1,9 @@
 Recommended Installation
 ------------------------
 
+Note: I'm in the process of adopting neovim. For the time being, this config
+is compatible with both vim 8+ and neovim, but using neovim is recommended.
+
 *  Move to your homedir
 
   ` cd ~`
@@ -17,11 +20,21 @@ Recommended Installation
 
   `ln -s .vim/.vimrc`
 
-* Setup and run Vundle
+* Extra steps for neovim support
 
   ```
-  cd .vim
-  mkdir bundle
-  git clone https://github.com/gmarik/Vundle.vim.git bundle/Vundle.vim
-  vim +PluginInstall +qall
+  mkdir -p ~/.config/nvim
+  ln -s ~/.vim/init.vim ~/.config/nvim/init.vim
+  ```
+
+* Install and run Plug
+
+  ```
+  # If you want vim 8 support
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  vim +PlugInstall
+
+  # If you want neovim support
+  curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  nvim +PlugInstall
   ```

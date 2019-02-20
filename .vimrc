@@ -12,64 +12,65 @@
 " Plugins                                                                  {{{
 " ----------------------------------------------------------------------------
 " This is where you put all your github-sourced vim plugins
-" Run ':PluginInstall' to install them
-" Run ':PluginClean' to remove unused plugins
+" First, install vim-plug
+" neovim: curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" vim 8+: curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-set nocompatible              " required, use modern vim features
-filetype off                  " required, for the Vundle setup part. Re-enabled later.
+call plug#begin('~/.local/share/nvim/plugged')
 
-" set the runtime path to include Vundle and initialize
-set rtp+=$HOME/.vim/bundle/Vundle.vim/
-call vundle#begin('$HOME/.vim/bundle/')
+" Nvim only plugins
+if has('nvim')
+endif
 
-Plugin 'MarcWeber/vim-addon-mw-utils'           " Dependency for beeerd/vim-chef-snippets
-Plugin 'Yggdroot/indentLine'                    " Sublime-like vertical guide lines
-Plugin 'airblade/vim-gitgutter'                 " adds git diff column and highlighting options
-Plugin 'avakhov/vim-yaml'                       " yaml highlighting
-Plugin 'beeerd/vim-chef-goto'                   " chef go-to-file support
-Plugin 'beeerd/vim-chef-snippets'               " Handy chef snippets and highlighting
-Plugin 'bling/vim-airline'                      " Fancy status line
-Plugin 'bracki/vim-prometheus'                  " Prometheus support
-Plugin 'vim-airline/vim-airline-themes'         " Add additional airline themes
-Plugin 'chriskempson/base16-vim'                " Lots of color schemes
-Plugin 'dougireton/vim-chef'                    " chef linting
-Plugin 'ekalinin/Dockerfile.vim'                " Dockerfile linting
-Plugin 'elzr/vim-json'                          " json highlighting
-Plugin 'erikzaadi/vim-ansible-yaml'             " Ansible YAML support
-Plugin 'garbas/vim-snipmate'                    " Dependency for beeerd/vim-chef-snippets
-Plugin 'gmarik/Vundle.vim'                      " Required for this to work
-Plugin 'godlygeek/tabular'                      " quick regex based formatting (v-mode highlight ':Tab /<pattern>')
-Plugin 'hashivim/vim-terraform'                 " Terraform syntax highlighting and :Terraform cmd
-Plugin 'kchmck/vim-coffee-script'               " coffee-script highlighting
-Plugin 'lepture/vim-jinja'                      " Jinja support
-Plugin 'mileszs/ack.vim'                        " Ack-find from within vim (:Ack <pattern>)
-Plugin 'othree/javascript-libraries-syntax.vim' " javascript library syntax highlighting
-Plugin 'pangloss/vim-javascript'                " javascript highlighting
-Plugin 'saltstack/salt-vim'                     " Saltstack file detection and highlighting
-Plugin 'scrooloose/nerdtree'                    " file tree navigator (n)
-Plugin 'scrooloose/syntastic'                   " Syntax utilities
-Plugin 'sjl/gundo.vim'                          " Mega Undo: graphical tree-based undo menu
-Plugin 'taylor/vim-zoomwin'                     " zoom in on a split pane (ctrl+w-o)
-Plugin 'thoughtbot/pick.vim'                    " Fuzzy-finder requires `brew tap thoughtbot/formulae ; brew install pick`
-Plugin 'tomtom/tcomment_vim'                    " add shortcut for commenting ('g-c-c')
-Plugin 'tomtom/tlib_vim'                        " Dependency for beeerd/vim-chef-snippets
-Plugin 'tpope/vim-fugitive'                     " Git integration
-Plugin 'tpope/vim-markdown'                     " markdown highlighting
-Plugin 'tpope/vim-rails'                        " rails highlighting
-Plugin 'tpope/vim-surround'                     " quick shortcuts for delimiters
-Plugin 'vim-ruby/vim-ruby'                      " ruby highlighting
-Plugin 'w0rp/ale'                               " Asynchronous linting
+" Vim 8 only plugins
+if !has('nvim')
+  Plug 'roxma/nvim-yarp'          " Add vim 8+ support for deoplete
+  Plug 'roxma/vim-hug-neovim-rpc' " Add vim 8+ support for deoplete
+endif
 
-call vundle#end()            " required
+" All the rest go here
+Plug 'Shougo/deoplete.nvim'                   " autocomplete engine
+Plug 'Shougo/neosnippet.vim'                  " Snippet support
+Plug 'Yggdroot/indentLine'                    " Sublime-like vertical guide lines
+Plug 'airblade/vim-gitgutter'                 " adds git diff column and highlighting options
+Plug 'avakhov/vim-yaml'                       " yaml highlighting
+Plug 'beeerd/vim-chef-goto'                   " chef go-to-file support
+Plug 'bling/vim-airline'                      " Fancy status line
+" Plug 'bracki/vim-prometheus'                  " Prometheus support
+Plug 'chriskempson/base16-vim'                " Lots of color schemes
+Plug 'ekalinin/Dockerfile.vim'                " Dockerfile linting
+Plug 'elzr/vim-json'                          " json highlighting
+Plug 'erikzaadi/vim-ansible-yaml'             " Ansible YAML support
+Plug 'godlygeek/tabular'                      " quick regex based formatting (v-mode highlight ':Tab /<pattern>'
+Plug 'hashivim/vim-terraform'                 " Terraform syntax highlighting and :Terraform cmd
+Plug 'honza/vim-snippets'                     " Big collection of snippets for different filetypes
+Plug 'juliosueiras/vim-terraform-completion'  " Terraform autocompletion for neovim
+" Plug 'kchmck/vim-coffee-script'               " coffee-script highlighting
+" Plug 'lepture/vim-jinja'                      " Jinja support
+" Plug 'mileszs/ack.vim'                        " Ack-find from within vim (:Ack <pattern>
+Plug 'othree/javascript-libraries-syntax.vim' " javascript library syntax highlighting
+Plug 'pangloss/vim-javascript'                " javascript highlighting
+" Plug 'saltstack/salt-vim'                     " Saltstack file detection and highlighting
+Plug 'scrooloose/nerdtree'                    " file tree navigator (n
+Plug 'mbbill/undotree'                        " Mega Undo: graphical tree-based undo menu
+Plug 'takkii/Bignyanco'                       " Ruby support for deoplete
+Plug 'taylor/vim-zoomwin'                     " zoom in on a split pane (ctrl+w-o
+Plug 'thoughtbot/pick.vim'                    " Fuzzy-finder requires `brew tap thoughtbot/formulae ; brew install pick`
+Plug 'tomtom/tcomment_vim'                    " add shortcut for commenting ('g-c-c'
+Plug 'tpope/vim-fugitive'                     " Git integration
+Plug 'tpope/vim-markdown'                     " markdown highlighting
+Plug 'tpope/vim-surround'                     " quick shortcuts for delimiters
+Plug 'vim-airline/vim-airline-themes'         " Add additional airline themes
+Plug 'vim-ruby/vim-ruby'                      " ruby highlighting
+Plug 'w0rp/ale'                               " Asynchronous linting
 
-" Set up Pathogen Bundle Mangement
-call pathogen#infect()
-call pathogen#helptags()
+call plug#end()
+
 
 " }}}-------------------------------------------------------------------------
 " General/Misc                                                             {{{
 " ----------------------------------------------------------------------------
-
+syntax enable
 set hidden        " hide buffers so we don't have to write them when working on another file
 set lazyredraw    " redraw only when we need to.
 set history=1000  " remember past 1000 commands
@@ -97,12 +98,51 @@ set smartcase                  " (unless your search query has caps)
 " Status Line                                                              {{{
 " ----------------------------------------------------------------------------
 
-set noshowmode                    " don't show mode in last row, it's in airline.
-set laststatus=2                  " Always display the status line
-let g:airline_powerline_fonts = 1 " Enable special powerline font (requires install)
-let g:airline_theme='base16'      " Airline theme
-let g:airline_left_sep=''         " Controls airline separator characters
-let g:airline_right_sep=''        " these can get a little goofy depending on font
+set noshowmode                           " don't show mode in last row, it's in airline.
+set laststatus=2                         " Always display the status line
+let g:airline_powerline_fonts = 1        " Enable special powerline font (requires install)
+let g:airline_theme='base16'             " Airline theme
+let g:airline_left_sep=''                " Controls airline separator characters
+let g:airline_right_sep=''               " these can get a little goofy depending on font
+let g:airline#extensions#ale#enabled = 1 " Enable ale support
+
+" }}}-------------------------------------------------------------------------
+" Autocomplete                                                             {{{
+" ----------------------------------------------------------------------------
+
+" Required deoplete setup
+let g:deoplete#omni_patterns = {}
+let g:deoplete#enable_at_startup = 1
+call deoplete#initialize()
+
+" Terraform options
+let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
+let g:terraform_completion_keys = 1
+let g:terraform_registry_module_completion = 1
+
+" Snippet plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+" Load honza snippets
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#snippets_directory='~/.cache/dein/repos/github.com/honza/vim-snippets/snippets'
 
 " }}}-------------------------------------------------------------------------
 " Input and Navigation                                                     {{{
@@ -126,7 +166,7 @@ let NERDTreeDirArrows=0
 let NERDTreeIgnore = ['\.DS_Store$']
 
 nnoremap <leader>t :call PickFile()<CR>|   " Pick binding (an awesome fuzzy finder plugin)
-nnoremap <leader>u :GundoToggle<CR>|       " Gundo binding (ultra-undo plugin)
+nnoremap <leader>u :UndotreeToggle<CR>|    " Undotree binding (ultra-undo plugin)
 nnoremap <leader>f :ChefFindAny<CR>|       " Open chef resource that cursor is on
 nnoremap <leader>g :ChefFindAnyVsplit<CR>| " Same, but in vertical split pane
 nnoremap <leader>w ::%s/\s\+$//<CR>|       " Remove all trailing whitespace
@@ -202,10 +242,10 @@ if has('autocmd')
   au BufRead *.md set conceallevel=2 wrap linebreak nonumber colorcolumn=0
   au BufRead *.terra set ft=tf
 endif
-  
+
 " Workaround for crappy filetype detection in vim-chef plugin
 " Replace with your cookbook path
-autocmd BufRead,BufNewFile ~/git/*/cookbooks/* set filetype=ruby.chef
+autocmd BufRead,BufNewFile ~/git/github/*/ops_chef*/*\.rb set filetype=ruby.chef
 
 " }}}-------------------------------------------------------------------------
 " Color & Syntax                                                           {{{
@@ -229,6 +269,13 @@ hi link jsonBraces Function|   " pretty blue braces instead of red
 
 " Zippier update interval (in ms)
 set updatetime=250
+
+" Autofix some things
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\}
+let g:ale_fix_on_save = 1
 
 " }}}-------------------------------------------------------------------------
 " Appearance                                                               {{{

@@ -3,6 +3,6 @@ backup/*
 tmp
 .netrwhist
 .VimballRecord
-autoload/visincr.vim
+autoload/*
 doc/
 plugin/
