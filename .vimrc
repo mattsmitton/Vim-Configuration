@@ -16,7 +16,12 @@
 " neovim: curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 " vim 8+: curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-call plug#begin('~/.local/share/nvim/plugged')
+" Setup plugin directory
+if has('nvim')
+  call plug#begin('~/.local/share/nvim/plugged')
+else
+  call plug#begin('~/.vim/plugged')
+endif
 
 " Nvim only plugins
 if has('nvim')
@@ -142,7 +147,11 @@ endif
 
 " Load honza snippets
 let g:neosnippet#enable_snipmate_compatibility = 1
-let g:neosnippet#snippets_directory='~/.cache/dein/repos/github.com/honza/vim-snippets/snippets'
+if has('nvim')
+  let g:neosnippet#snippets_directory='~/.local/share/nvim/plugged/vim-snippets/snippets'
+else
+  let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
+endif
 
 " }}}-------------------------------------------------------------------------
 " Input and Navigation                                                     {{{

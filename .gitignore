@@ -4,5 +4,6 @@ tmp
 .netrwhist
 .VimballRecord
 autoload/*
+plugged/
 doc/
 plugin/
