@@ -26,11 +26,11 @@ endif
 " Nvim only plugins
 if has('nvim')
   Plug 'neoclide/coc.nvim'    " Autocomplete for most things
-  Plug 'Shougo/deoplete.nvim' " Terraform-friendly autocomplete engine
-  Plug 'Shougo/neosnippet.vim' " Snippet support
+  " Plug 'Shougo/deoplete.nvim' " Terraform-friendly autocomplete engine
+  " Plug 'Shougo/neosnippet.vim' " Snippet support
   " Plug 'honza/vim-snippets'   " Big collection of snippets for different filetypes. Maybe too many.
   Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-  Plug 'juliosueiras/vim-terraform-completion'  " Terraform autocompletion for neovim
+  " Plug 'juliosueiras/vim-terraform-completion'  " Terraform autocompletion for neovim
 endif
 
 " Vim 8 only plugins
@@ -133,9 +133,9 @@ if has('nvim')
   "" CoC Setup
   fun! LoadCocPlugin()
     " Skip if it's a Terraform file, in which case we want deoplete
-    if &ft == "terraform"
-      return
-    endif
+    " if &ft == "terraform"
+    "   return
+    " endif
     call plug#load('neoclide/coc.nvim')
   endfun
 
@@ -169,39 +169,39 @@ if has('nvim')
 
   " Terraform options
   " Requires deoplete ... just waiting on a coc-friendly extension
-  if &ft == "terraform"
-    let g:deoplete#omni_patterns = {}
-    let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
-    let g:deoplete#enable_at_startup = 1
-    call deoplete#initialize()
-    let g:terraform_completion_keys = 1
-    let g:terraform_registry_module_completion = 1
-
-    " Setup snippet support
-    let g:neosnippet#disable_runtime_snippets = 1
-    let g:neosnippet#enable_snipmate_compatibility = 1
-    let g:neosnippet#snippets_directory='~/.local/nvim/plugged/vim-terraform-completion/snippets/terraform'
-    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-    " imap <expr><TAB>
-    " \ pumvisible() ? "\<C-n>" :
-    " \ neosnippet#expandable_or_jumpable() ?
-    " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-    "
-    " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    " \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-    " function! s:check_back_space() abort
-    "   let col = col('.') - 1
-    "   return !col || getline('.')[col - 1]  =~ '\s'
-    " endfunction
-    " inoremap <silent><expr> <TAB>
-    "       \ pumvisible() ? "\<C-n>" :
-    "       \ <SID>check_back_space() ? "\<TAB>" :
-    "       \ deoplete#manual_complete()
-  endif
+  " if &ft == "terraform"
+  "   let g:deoplete#omni_patterns = {}
+  "   let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
+  "   let g:deoplete#enable_at_startup = 1
+  "   call deoplete#initialize()
+  "   let g:terraform_completion_keys = 1
+  "   let g:terraform_registry_module_completion = 1
+  "
+  "   " Setup snippet support
+  "   let g:neosnippet#disable_runtime_snippets = 1
+  "   let g:neosnippet#enable_snipmate_compatibility = 1
+  "   let g:neosnippet#snippets_directory='~/.local/nvim/plugged/vim-terraform-completion/snippets/terraform'
+  "   imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  "   smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  "   xmap <C-k>     <Plug>(neosnippet_expand_target)
+  "
+  "   " imap <expr><TAB>
+  "   " \ pumvisible() ? "\<C-n>" :
+  "   " \ neosnippet#expandable_or_jumpable() ?
+  "   " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+  "   "
+  "   " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+  "   " \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+  "
+  "   " function! s:check_back_space() abort
+  "   "   let col = col('.') - 1
+  "   "   return !col || getline('.')[col - 1]  =~ '\s'
+  "   " endfunction
+  "   " inoremap <silent><expr> <TAB>
+  "   "       \ pumvisible() ? "\<C-n>" :
+  "   "       \ <SID>check_back_space() ? "\<TAB>" :
+  "   "       \ deoplete#manual_complete()
+  " endif
 
 endif
 
