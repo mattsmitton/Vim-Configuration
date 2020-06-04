@@ -322,7 +322,7 @@ if has('autocmd')
   au FileType cpp,c,java,sh,pl,php set cindent
   au FileType python set cinwords=if,elif,else,for,while,try,except,finally,def,class ts=4 sts=4 sw=4 fdm=indent
   au FileType groovy set cinwords=if,else,for,while,try,catch,finally,def,given,when,then,switch ts=4 sts=4 sw=4 fdm=indent
-  au FileType ruby,chef.ruby set cinwords=if,elsif,else,for,while,until,except,begin,rescue,ensure,def,do,class ts=2 sts=2 sw=2 fdm=indent
+  au FileType ruby,ruby.chef set cinwords=if,elsif,else,for,while,until,except,begin,rescue,ensure,def,do,class ts=2 sts=2 sw=2 fdm=indent
   au FileType javascript setlocal shiftwidth=4 tabstop=4 softtabstop=4
   au FileType make setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
   au BufRead *.md set conceallevel=2 wrap linebreak
