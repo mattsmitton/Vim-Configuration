@@ -25,7 +25,7 @@ endif
 
 " Nvim only plugins
 if has('nvim')
-  Plug 'neoclide/coc.nvim'    " Autocomplete for most things
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}    " Autocomplete for most things
   " Plug 'Shougo/deoplete.nvim' " Terraform-friendly autocomplete engine
   " Plug 'Shougo/neosnippet.vim' " Snippet support
   " Plug 'honza/vim-snippets'   " Big collection of snippets for different filetypes. Maybe too many.
@@ -50,6 +50,7 @@ Plug 'chriskempson/base16-vim'                " Lots of color schemes
 Plug 'ekalinin/Dockerfile.vim'                " Dockerfile linting
 Plug 'elzr/vim-json'                          " json highlighting
 Plug 'erikzaadi/vim-ansible-yaml'             " Ansible YAML support
+" Plug 'github/copilot.vim'                     " Borg code
 Plug 'godlygeek/tabular'                      " quick regex based formatting (v-mode highlight ':Tab /<pattern>'
 Plug 'hashivim/vim-terraform'                 " Terraform syntax highlighting and :Terraform cmd
 Plug 'jremmen/vim-ripgrep'                    " Grep, but better
@@ -71,7 +72,8 @@ Plug 'tpope/vim-markdown'                     " markdown highlighting
 Plug 'tpope/vim-surround'                     " quick shortcuts for delimiters
 Plug 'vim-airline/vim-airline-themes'         " Add additional airline themes
 Plug 'vim-ruby/vim-ruby'                      " ruby highlighting
-Plug 'w0rp/ale'                               " Asynchronous linting
+Plug 'dense-analysis/ale'                     " Asynchronous linting
+Plug 'towolf/vim-helm'                        " Helm syntax highlighting
 
 call plug#end()
 
@@ -323,9 +325,10 @@ if has('autocmd')
   au FileType python set cinwords=if,elif,else,for,while,try,except,finally,def,class ts=4 sts=4 sw=4 fdm=indent
   au FileType groovy set cinwords=if,else,for,while,try,catch,finally,def,given,when,then,switch ts=4 sts=4 sw=4 fdm=indent
   au FileType ruby,ruby.chef set cinwords=if,elsif,else,for,while,until,except,begin,rescue,ensure,def,do,class ts=2 sts=2 sw=2 fdm=indent
-  au FileType javascript setlocal shiftwidth=4 tabstop=4 softtabstop=4
+  au BufRead,BufNewFile */.github/*/*.y{,a}ml let b:ale_linters = {'yaml': ['actionlint']}
   au FileType make setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
   au BufRead *.md set conceallevel=2 wrap linebreak
+  au BufRead *.nomad set filetype=hcl
 endif
 
 " Workaround for crappy filetype detection in vim-chef plugin
