@@ -14,7 +14,7 @@ is compatible with both vim 8+ and neovim, but using neovim is recommended.
 
 **Clone this down**
 
-`git clone git://github.com/beeerd/Vim-Configuration.git .vim`
+`git clone git://github.com/mattsmitton/Vim-Configuration.git .vim`
 
 **Create a symlink in your homedir from .vimrc to the .vimrc inside this .vim dir**
 
