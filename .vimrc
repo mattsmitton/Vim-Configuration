@@ -25,11 +25,19 @@ endif
 
 " Nvim only plugins
 if has('nvim')
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}    " Autocomplete for most things
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+
+  " Copilot support
+  Plug 'github/copilot.vim'                     " Borg code
+  Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'zbirenbaum/copilot.lua'
+
+  " Autocomplete tools prior to copilot
+  " Plug 'neoclide/coc.nvim', {'branch': 'release'}    " Autocomplete for most things
   " Plug 'Shougo/deoplete.nvim' " Terraform-friendly autocomplete engine
   " Plug 'Shougo/neosnippet.vim' " Snippet support
   " Plug 'honza/vim-snippets'   " Big collection of snippets for different filetypes. Maybe too many.
-  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
   " Plug 'juliosueiras/vim-terraform-completion'  " Terraform autocompletion for neovim
 endif
 
@@ -40,43 +48,51 @@ if !has('nvim')
 endif
 
 " All the rest go here
+Plug '/usr/local/opt/fzf'                     " We already installed this with brew right?
+Plug 'GutenYe/json5.vim'                      " json5 highlighting (should be built-in for nvim soon...)
 Plug 'Yggdroot/indentLine'                    " Sublime-like vertical guide lines
 Plug 'airblade/vim-gitgutter'                 " adds git diff column and highlighting options
 Plug 'avakhov/vim-yaml'                       " yaml highlighting
 Plug 'beeerd/vim-chef-goto'                   " chef go-to-file support
 Plug 'bling/vim-airline'                      " Fancy status line
-" Plug 'bracki/vim-prometheus'                  " Prometheus support
 Plug 'chriskempson/base16-vim'                " Lots of color schemes
+Plug 'dense-analysis/ale'                     " Asynchronous linting
 Plug 'ekalinin/Dockerfile.vim'                " Dockerfile linting
 Plug 'elzr/vim-json'                          " json highlighting
 Plug 'erikzaadi/vim-ansible-yaml'             " Ansible YAML support
-" Plug 'github/copilot.vim'                     " Borg code
 Plug 'godlygeek/tabular'                      " quick regex based formatting (v-mode highlight ':Tab /<pattern>'
 Plug 'hashivim/vim-terraform'                 " Terraform syntax highlighting and :Terraform cmd
 Plug 'jremmen/vim-ripgrep'                    " Grep, but better
 Plug 'junegunn/fzf'                           " Fuzzy finder
-Plug '/usr/local/opt/fzf'                     " We already installed this with brew right?
 Plug 'luochen1990/rainbow'                    " rainbow parentheses
-" Plug 'kchmck/vim-coffee-script'               " coffee-script highlighting
-" Plug 'lepture/vim-jinja'                      " Jinja support
-" Plug 'mileszs/ack.vim'                        " Ack-find from within vim (:Ack <pattern>
+Plug 'mbbill/undotree'                        " Mega Undo: graphical tree-based undo menu
 Plug 'othree/javascript-libraries-syntax.vim' " javascript library syntax highlighting
 Plug 'pangloss/vim-javascript'                " javascript highlighting
-" Plug 'saltstack/salt-vim'                     " Saltstack file detection and highlighting
 Plug 'scrooloose/nerdtree'                    " file tree navigator (n
-Plug 'mbbill/undotree'                        " Mega Undo: graphical tree-based undo menu
 Plug 'taylor/vim-zoomwin'                     " zoom in on a split pane (ctrl+w-o
 Plug 'tomtom/tcomment_vim'                    " add shortcut for commenting ('g-c-c'
+Plug 'towolf/vim-helm'                        " Helm syntax highlighting
 Plug 'tpope/vim-fugitive'                     " Git integration
 Plug 'tpope/vim-markdown'                     " markdown highlighting
 Plug 'tpope/vim-surround'                     " quick shortcuts for delimiters
 Plug 'vim-airline/vim-airline-themes'         " Add additional airline themes
 Plug 'vim-ruby/vim-ruby'                      " ruby highlighting
-Plug 'dense-analysis/ale'                     " Asynchronous linting
-Plug 'towolf/vim-helm'                        " Helm syntax highlighting
+
+" Disabled for now...
+" Plug 'bracki/vim-prometheus'                  " Prometheus support
+" Plug 'kchmck/vim-coffee-script'               " coffee-script highlighting
+" Plug 'lepture/vim-jinja'                      " Jinja support
 
 call plug#end()
 
+" Initialize CopilotChat
+if has('nvim')
+lua << EOF
+require("CopilotChat").setup {
+  debug = false,
+}
+EOF
+endif
 
 " }}}-------------------------------------------------------------------------
 " General/Misc                                                             {{{
@@ -289,6 +305,8 @@ vmap <C-c> :w !pbcopy<CR><CR>
 " Call rubocop with autocorrect
 map <leader>R :call RunRubocop()<CR>
 
+" Open copilot chat window
+nmap <leader>cc :CopilotChat<CR>
 " }}}-------------------------------------------------------------------------
 " Folding                                                                  {{{
 " ----------------------------------------------------------------------------
@@ -325,7 +343,10 @@ if has('autocmd')
   au FileType python set cinwords=if,elif,else,for,while,try,except,finally,def,class ts=4 sts=4 sw=4 fdm=indent
   au FileType groovy set cinwords=if,else,for,while,try,catch,finally,def,given,when,then,switch ts=4 sts=4 sw=4 fdm=indent
   au FileType ruby,ruby.chef set cinwords=if,elsif,else,for,while,until,except,begin,rescue,ensure,def,do,class ts=2 sts=2 sw=2 fdm=indent
+  " Make sure GHA and not YAML is being linted
   au BufRead,BufNewFile */.github/*/*.y{,a}ml let b:ale_linters = {'yaml': ['actionlint']}
+  " Intent is to disable checkov linter, it is very slow and poorly implemented
+  au BufRead,BufNewFile *.tf let b:ale_linters = {'terraform': ['terraform', 'terraform_ls', 'terraform_lsp', 'tflint', 'tfsec']}
   au FileType make setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
   au BufRead *.md set conceallevel=2 wrap linebreak
   au BufRead *.nomad set filetype=hcl
