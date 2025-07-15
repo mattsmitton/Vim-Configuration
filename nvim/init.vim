@@ -1,12 +1,11 @@
 " ----------------------------------------------------------------------------
-"                          __
-"                  __  __ /\_\    ___ ___   _ __   ___
-"                 /\ \/\ \\/\ \ /' __` __`\/\`'__\/'___\
-"                __\ \ \_/ |\ \ \/\ \/\ \/\ \ \ \//\ \__/
-"               /\_\\ \___/  \ \_\ \_\ \_\ \_\ \_\\ \____\
-"               \/_/ \/__/    \/_/\/_/\/_/\/_/\/_/ \/____/
 "
-" This .vimrc file uses folding to manage the display of its contents.
+"              _)        _)  |            _)
+"               |  __ \   |  __|  \ \   /  |  __ `__ \
+"               |  |   |  |  |     \ \ /   |  |   |   |
+"              _| _|  _| _| \__| _) \_/   _| _|  _|  _|
+"
+" This init.vim file uses folding to manage the display of its contents.
 " Use the 'zR' command to open all of the sections if you're lost...
 " ----------------------------------------------------------------------------
 " Plugins                                                                  {{{
@@ -14,38 +13,16 @@
 " This is where you put all your github-sourced vim plugins
 " First, install vim-plug
 " neovim: curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-" vim 8+: curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 " Setup plugin directories
-if has('nvim')
-  call plug#begin('~/.local/share/nvim/plugged')
-else
-  call plug#begin('~/.vim/plugged')
-endif
+call plug#begin('~/.local/share/nvim/plugged')
 
-" Nvim only plugins
-if has('nvim')
-  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-
-  " Copilot support
-  Plug 'github/copilot.vim'                     " Borg code
-  Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
-  Plug 'nvim-lua/plenary.nvim'
-  Plug 'zbirenbaum/copilot.lua'
-
-  " Autocomplete tools prior to copilot
-  " Plug 'neoclide/coc.nvim', {'branch': 'release'}    " Autocomplete for most things
-  " Plug 'Shougo/deoplete.nvim' " Terraform-friendly autocomplete engine
-  " Plug 'Shougo/neosnippet.vim' " Snippet support
-  " Plug 'honza/vim-snippets'   " Big collection of snippets for different filetypes. Maybe too many.
-  " Plug 'juliosueiras/vim-terraform-completion'  " Terraform autocompletion for neovim
-endif
-
-" Vim 8 only plugins
-if !has('nvim')
-  "Plug 'roxma/nvim-yarp'          " Add vim 8+ support for deoplete
-  "Plug 'roxma/vim-hug-neovim-rpc' " Add vim 8+ support for deoplete
-endif
+" Copilot support
+Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'main' }
+Plug 'nvim-lua/plenary.nvim'
+Plug 'zbirenbaum/copilot.lua'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'zbirenbaum/copilot-cmp'
 
 " All the rest go here
 Plug '/usr/local/opt/fzf'                     " We already installed this with brew right?
@@ -62,6 +39,8 @@ Plug 'elzr/vim-json'                          " json highlighting
 Plug 'erikzaadi/vim-ansible-yaml'             " Ansible YAML support
 Plug 'godlygeek/tabular'                      " quick regex based formatting (v-mode highlight ':Tab /<pattern>'
 Plug 'hashivim/vim-terraform'                 " Terraform syntax highlighting and :Terraform cmd
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+Plug 'inkarkat/vim-AdvancedSorters'           " Advanced sorting options
 Plug 'jremmen/vim-ripgrep'                    " Grep, but better
 Plug 'junegunn/fzf'                           " Fuzzy finder
 Plug 'luochen1990/rainbow'                    " rainbow parentheses
@@ -76,64 +55,35 @@ Plug 'tpope/vim-fugitive'                     " Git integration
 Plug 'tpope/vim-markdown'                     " markdown highlighting
 Plug 'tpope/vim-surround'                     " quick shortcuts for delimiters
 Plug 'vim-airline/vim-airline-themes'         " Add additional airline themes
+Plug 'inkarkat/vim-ingo-library'              " Required for vim-AdvancedSorters
 Plug 'vim-ruby/vim-ruby'                      " ruby highlighting
-
-" Disabled for now...
-" Plug 'bracki/vim-prometheus'                  " Prometheus support
-" Plug 'kchmck/vim-coffee-script'               " coffee-script highlighting
-" Plug 'lepture/vim-jinja'                      " Jinja support
 
 call plug#end()
 
-" Initialize CopilotChat
-if has('nvim')
-lua << EOF
-require("CopilotChat").setup {
-  debug = false,
-}
-EOF
-endif
+lua require('config')
 
 " }}}-------------------------------------------------------------------------
 " General/Misc                                                             {{{
 " ----------------------------------------------------------------------------
-" syntax enable
+syntax enable
 set hidden        " hide buffers so we don't have to write them when working on another file
 set lazyredraw    " redraw only when we need to.
 let mapleader="," " for various shortcuts later
 
-if !has('nvim')
-  set history=1000  " remember past 1000 commands
-  set ttyfast       " Indicates a fast terminal connection
-
-  "Use a block cursor in normal/visual mode
-  let &t_ti.="\e[1 q"
-  let &t_SI.="\e[5 q"
-  let &t_EI.="\e[1 q"
-  let &t_te.="\e[0 q"
-endif
 
 " }}}-------------------------------------------------------------------------
 " Command Line                                                            {{{
 " ----------------------------------------------------------------------------
-
-if !has('nvim')
-  set cmdheight=1 " how tall is command line
-  set wildmenu    " Enable menu during command tab completion
-endif
 
 set wildmode=longest:full " 1st tab = longest common string, subsequent show possible full matches
 set wildignore=vendor/**  " ignore paths during tab completion
 set ignorecase            " case insensitive search
 set smartcase             " (unless your search query has caps)
 
+
 " }}}-------------------------------------------------------------------------
 " Status Line                                                              {{{
 " ----------------------------------------------------------------------------
-
-if !has('nvim')
-  set laststatus=2                         " Always display the status line
-endif
 
 set noshowmode                           " don't show mode in last row, reserve it for airline.
 let g:airline_powerline_fonts = 1        " Enable special powerline font (requires install)
@@ -144,92 +94,8 @@ let g:airline#extensions#ale#enabled = 1 " Enable ale support
 
 
 " }}}-------------------------------------------------------------------------
-" Autocomplete                                                             {{{
-" ----------------------------------------------------------------------------
-
-if has('nvim')
-  "" CoC Setup
-  fun! LoadCocPlugin()
-    " Skip if it's a Terraform file, in which case we want deoplete
-    " if &ft == "terraform"
-    "   return
-    " endif
-    call plug#load('neoclide/coc.nvim')
-  endfun
-
-  augroup LoadCoc
-    " remove any previously loaded autocmd! for the InsertEnter event
-    autocmd!
-    autocmd InsertEnter * call LoadCocPlugin() | autocmd! LoadCoc
-  augroup END
-
-  " use <tab> for trigger completion and navigate to next complete item
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-  endfunction
-
-  inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ coc#refresh()
-
-  " Use <Tab> and <S-Tab> for navigate CoC completion list
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  " Use <enter> to confirm complete
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-  let g:coc_snippet_next = '<TAB>'
-  let g:coc_snippet_prev = '<S-TAB>'
-
-  " Close preview window when completion is done.
-  autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-
-  " Terraform options
-  " Requires deoplete ... just waiting on a coc-friendly extension
-  " if &ft == "terraform"
-  "   let g:deoplete#omni_patterns = {}
-  "   let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
-  "   let g:deoplete#enable_at_startup = 1
-  "   call deoplete#initialize()
-  "   let g:terraform_completion_keys = 1
-  "   let g:terraform_registry_module_completion = 1
-  "
-  "   " Setup snippet support
-  "   let g:neosnippet#disable_runtime_snippets = 1
-  "   let g:neosnippet#enable_snipmate_compatibility = 1
-  "   let g:neosnippet#snippets_directory='~/.local/nvim/plugged/vim-terraform-completion/snippets/terraform'
-  "   imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  "   smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  "   xmap <C-k>     <Plug>(neosnippet_expand_target)
-  "
-  "   " imap <expr><TAB>
-  "   " \ pumvisible() ? "\<C-n>" :
-  "   " \ neosnippet#expandable_or_jumpable() ?
-  "   " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-  "   "
-  "   " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  "   " \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-  "
-  "   " function! s:check_back_space() abort
-  "   "   let col = col('.') - 1
-  "   "   return !col || getline('.')[col - 1]  =~ '\s'
-  "   " endfunction
-  "   " inoremap <silent><expr> <TAB>
-  "   "       \ pumvisible() ? "\<C-n>" :
-  "   "       \ <SID>check_back_space() ? "\<TAB>" :
-  "   "       \ deoplete#manual_complete()
-  " endif
-
-endif
-
-" }}}-------------------------------------------------------------------------
 " Input and Navigation                                                     {{{
 " ----------------------------------------------------------------------------
-
-if !has('nvim')
-  set incsearch " move cursor to matched string while typing pattern
-endif
 
 if has("mouse")
   set mouse=a " Enable Mouse support
@@ -302,6 +168,9 @@ autocmd BufNewFile,BufRead */knife-edit* inoremap <Esc> <Esc>:w! ~/.vim/backup/k
 vmap <C-x> :!pbcopy<CR>
 vmap <C-c> :w !pbcopy<CR><CR>
 
+" Enable native clipboard integration
+set clipboard=unnamedplus
+
 " Call rubocop with autocorrect
 map <leader>R :call RunRubocop()<CR>
 
@@ -310,10 +179,6 @@ nmap <leader>cc :CopilotChat<CR>
 " }}}-------------------------------------------------------------------------
 " Folding                                                                  {{{
 " ----------------------------------------------------------------------------
-
-if !has('nvim')
-  set foldenable          " enable folding
-endif
 
 set foldlevelstart=10   " open most folds by default
 " set foldnestmax=10      " 10 nested fold max, default is 20
@@ -335,39 +200,31 @@ set smartindent
 " Filetype Handling                                                        {{{
 " ----------------------------------------------------------------------------
 
+filetype on
 filetype plugin indent on " enable modified behaviour by file extension
 
 " Whitespace, etc
-if has('autocmd')
-  au FileType cpp,c,java,sh,pl,php set cindent
-  au FileType python set cinwords=if,elif,else,for,while,try,except,finally,def,class ts=4 sts=4 sw=4 fdm=indent
-  au FileType groovy set cinwords=if,else,for,while,try,catch,finally,def,given,when,then,switch ts=4 sts=4 sw=4 fdm=indent
-  au FileType ruby,ruby.chef set cinwords=if,elsif,else,for,while,until,except,begin,rescue,ensure,def,do,class ts=2 sts=2 sw=2 fdm=indent
-  " Make sure GHA and not YAML is being linted
-  au BufRead,BufNewFile */.github/*/*.y{,a}ml let b:ale_linters = {'yaml': ['actionlint']}
-  " Intent is to disable checkov linter, it is very slow and poorly implemented
-  au BufRead,BufNewFile *.tf let b:ale_linters = {'terraform': ['terraform', 'terraform_ls', 'terraform_lsp', 'tflint', 'tfsec']}
-  au FileType make setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
-  au BufRead *.md set conceallevel=2 wrap linebreak
-  au BufRead *.nomad set filetype=hcl
-endif
+augroup filetypedetect
+  autocmd FileType cpp,c,java,sh,pl,php setlocal cindent
+  autocmd FileType python setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class ts=4 sts=4 sw=4 fdm=indent
+  autocmd FileType groovy setlocal cinwords=if,else,for,while,try,catch,finally,def,given,when,then,switch ts=4 sts=4 sw=4 fdm=indent
+  autocmd FileType ruby,ruby.chef setlocal cinwords=if,elsif,else,for,while,until,except,begin,rescue,ensure,def,do,class ts=2 sts=2 sw=2 fdm=indent
+  autocmd FileType vim setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType make setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
+  autocmd BufRead *.md setlocal conceallevel=2 wrap linebreak
+  autocmd BufRead *.nomad setlocal filetype=hcl
+  autocmd BufRead,BufNewFile */.github/*/*.y{,a}ml let b:ale_linters = {'yaml': ['actionlint']}
+  autocmd BufRead,BufNewFile *.tf let b:ale_linters = {'terraform': ['terraform', 'terraform_ls', 'terraform_lsp', 'tflint', 'tfsec']}
+augroup END
 
 " Workaround for crappy filetype detection in vim-chef plugin
 " Replace with your cookbook path
-autocmd BufRead,BufNewFile ~/git/github/*/ops_chef*/*\.rb set filetype=ruby.chef
+autocmd BufRead,BufNewFile ~/git/github/*/ops_chef*/*\.rb setlocal filetype=ruby.chef
+
 
 " }}}-------------------------------------------------------------------------
 " Color & Syntax                                                           {{{
 " ----------------------------------------------------------------------------
-if !has('nvim')
-  " vim documentation on this is a little confusing.
-  " nvim doesn't seem to require it.
-  if !exists("g:syntax_on")
-    syntax enable
-  endif
-endif
-
-
 if &term == "screen"
   set t_Co=256              " Force 256 color only if needed
 endif
@@ -435,9 +292,6 @@ function PasteToggle()
   if g:pasteMode
     IndentLinesEnable
     GitGutterEnable
-    if !has('nvim')
-      set nopaste
-    endif
     set nowrap
     set number
     set relativenumber
@@ -451,9 +305,6 @@ function PasteToggle()
     IndentLinesDisable
     GitGutterDisable
     set mouse=""
-    if !has('nvim')
-      set paste
-    endif
     set wrap
     set nonumber
     set norelativenumber
@@ -465,8 +316,8 @@ function PasteToggle()
 endfunction
 map <leader>p :call PasteToggle()<cr>
 
-
 " Automatically create backup/tmp dirs for vim
+"
 " in ~/.vim
 " Filenames are full paths with % separators
 function! InitBackupDir()
