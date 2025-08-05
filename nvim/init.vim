@@ -17,12 +17,21 @@
 " Setup plugin directories
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Copilot support
-Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'main' }
+" Avante Deps
 Plug 'nvim-lua/plenary.nvim'
-Plug 'zbirenbaum/copilot.lua'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'MeanderingProgrammer/render-markdown.nvim'
+
+" Avante Optional deps
 Plug 'hrsh7th/nvim-cmp'
-Plug 'zbirenbaum/copilot-cmp'
+Plug 'nvim-tree/nvim-web-devicons' "or Plug 'echasnovski/mini.icons'
+Plug 'HakonHarnes/img-clip.nvim'
+Plug 'zbirenbaum/copilot.lua'
+Plug 'stevearc/dressing.nvim' " for enhanced input UI
+Plug 'folke/snacks.nvim' " for modern input UI
+
+" Avante... pass source=true if you want to build from source
+Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 
 " All the rest go here
 Plug '/usr/local/opt/fzf'                     " We already installed this with brew right?
