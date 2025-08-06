@@ -17,16 +17,92 @@ cmp.setup({
   },
 })
 
-require('avante').setup({
-  input = {
-    provider = "snacks",
-    provider_opts = {
-      -- Snacks input configuration
-      title = "Avante Input",
-      icon = " ",
-      placeholder = "Enter your API key...",
-    },
-  },
-  provider = "copilot",
-  -- Your other config here!
+require("mcphub").setup({
+  extensions = {
+    avante = {
+        make_slash_commands = true, -- make /slash commands from MCP server prompts
+    }
+  }
 })
+
+-- Function to wait for MCPHub initialization and then setup Avante
+local function setup_avante_with_mcphub()
+  local max_attempts = 50  -- Maximum number of attempts
+  local attempt_delay = 100  -- Delay between attempts in milliseconds
+  local current_attempt = 0
+
+  local function try_setup()
+    current_attempt = current_attempt + 1
+    local hub = require("mcphub").get_hub_instance()
+
+    if hub then
+      -- MCPHub is ready, setup Avante with full integration
+      print("MCPHub initialized, setting up Avante with MCP tools...")
+
+      require('avante').setup({
+        input = {
+          provider = "snacks",
+          provider_opts = {
+            -- Snacks input configuration
+            title = "Avante Input",
+            icon = " ",
+            placeholder = "Enter your API key...",
+          },
+        },
+        provider = "copilot",
+        system_prompt = function()
+          local hub_instance = require("mcphub").get_hub_instance()
+          return hub_instance and hub_instance:get_active_servers_prompt() or ""
+        end,
+        custom_tools = function()
+          local hub_instance = require("mcphub").get_hub_instance()
+          if not hub_instance then
+            return {}
+          end
+
+          local ext_ok, ext = pcall(require, "mcphub.extensions.avante")
+          if not ext_ok then
+            return {}
+          end
+
+          local mcp_tool = ext.mcp_tool()
+          if not mcp_tool then
+            return {}
+          end
+
+          return { mcp_tool }
+        end,
+      })
+
+    elseif current_attempt < max_attempts then
+      -- MCPHub not ready yet, try again after delay
+      vim.defer_fn(try_setup, attempt_delay)
+    else
+      -- Max attempts reached, setup Avante without MCP integration
+      print("MCPHub initialization timeout, setting up Avante without MCP tools...")
+
+      require('avante').setup({
+        input = {
+          provider = "snacks",
+          provider_opts = {
+            -- Snacks input configuration
+            title = "Avante Input",
+            icon = " ",
+            placeholder = "Enter your API key...",
+          },
+        },
+        provider = "copilot",
+        system_prompt = "",
+        custom_tools = function()
+          return {}
+        end,
+      })
+    end
+  end
+
+  -- Start the initialization check
+  vim.defer_fn(try_setup, attempt_delay)
+end
+
+-- Setup Avante with MCPHub integration after a short delay
+setup_avante_with_mcphub()
