@@ -1,3 +1,13 @@
+local lspconfig = require("lspconfig")
+lspconfig.gopls.setup({})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.go",
+    callback = function()
+        vim.lsp.buf.format({ async = false }) -- For synchronous formatting
+    end,
+})
+
 -- Initialize Copilot, CopilotChat, and nvim-cmp integration
 require("copilot").setup({})
 -- require("CopilotChat").setup { debug = false }
@@ -40,6 +50,19 @@ local function setup_avante_with_mcphub()
       print("MCPHub initialized, setting up Avante with MCP tools...")
 
       require('avante').setup({
+        -- These conflict with MCPHub
+        disabled_tools = {
+          "list_files",    -- Built-in file operations
+          "search_files",
+          "read_file",
+          "create_file",
+          "rename_file",
+          "delete_file",
+          "create_dir",
+          "rename_dir",
+          "delete_dir",
+          "bash",         -- Built-in terminal access
+        },
         input = {
           provider = "snacks",
           provider_opts = {

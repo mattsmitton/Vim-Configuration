@@ -51,10 +51,12 @@ Plug 'godlygeek/tabular'                      " quick regex based formatting (v-
 Plug 'hashivim/vim-terraform'                 " Terraform syntax highlighting and :Terraform cmd
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'inkarkat/vim-AdvancedSorters'           " Advanced sorting options
+Plug 'inkarkat/vim-ingo-library'              " Required for vim-AdvancedSorters
 Plug 'jremmen/vim-ripgrep'                    " Grep, but better
 Plug 'junegunn/fzf'                           " Fuzzy finder
 Plug 'luochen1990/rainbow'                    " rainbow parentheses
 Plug 'mbbill/undotree'                        " Mega Undo: graphical tree-based undo menu
+Plug 'neovim/nvim-lspconfig'                  " Native language server protocol
 Plug 'othree/javascript-libraries-syntax.vim' " javascript library syntax highlighting
 Plug 'pangloss/vim-javascript'                " javascript highlighting
 Plug 'scrooloose/nerdtree'                    " file tree navigator (n
@@ -65,7 +67,6 @@ Plug 'tpope/vim-fugitive'                     " Git integration
 Plug 'tpope/vim-markdown'                     " markdown highlighting
 Plug 'tpope/vim-surround'                     " quick shortcuts for delimiters
 Plug 'vim-airline/vim-airline-themes'         " Add additional airline themes
-Plug 'inkarkat/vim-ingo-library'              " Required for vim-AdvancedSorters
 Plug 'vim-ruby/vim-ruby'                      " ruby highlighting
 
 call plug#end()
@@ -179,7 +180,7 @@ vmap <C-x> :!pbcopy<CR>
 vmap <C-c> :w !pbcopy<CR><CR>
 
 " Enable native clipboard integration
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
 
 " Call rubocop with autocorrect
 map <leader>R :call RunRubocop()<CR>
